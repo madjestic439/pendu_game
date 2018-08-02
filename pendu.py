@@ -4,9 +4,10 @@ import os
 
 from src.fonctions import *
 
-the_mot = get_mot()
-print(the_mot)
-print(is_caract_valide(the_mot, ['a', 'b'], 't'))
-print(get_state_mot(the_mot, ['a', 'b']))
+#the_mot = get_mot()
+#print(the_mot)
+#print(is_caract_valide(the_mot, ['a', 'b'], 't'))
+#print(get_state_mot(the_mot, ['a', 'b']))
+print('ok=>'+saisi_caract())
 
 os.system("pause")

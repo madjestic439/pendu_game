@@ -25,3 +25,21 @@ def get_state_mot(the_mot, list_find_caract):
 		else:
 			rep += '*'
 	return rep
+
+def saisi_caract():
+	while 1:
+		caract = str(input('tape one character: '))
+		caract = caract.strip()
+		if len(caract) < 1 :
+			print('we need one character like "a" or "b"...')
+		else:
+			return str(caract[0])
+
+def saisi_nom():
+	while 1:
+		nom = str(input('your name: '))
+		nom = nom.strip()
+		if len(nom) < 1 :
+			print('tape your name following by <Enter>')
+		else:
+			return str(nom)
