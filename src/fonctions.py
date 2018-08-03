@@ -1,8 +1,14 @@
 ###!src/bin/python
 
 from random import randint
+import pickle
 
 from src.data import *
+
+def get_param():
+	param = {}
+	param['trying_number'] = trying_number
+	return param
 
 def get_mot():
 	nb_mots = len(mots)
@@ -43,3 +49,24 @@ def saisi_nom():
 			print('tape your name following by <Enter>')
 		else:
 			return str(nom)
+
+def save_scores(scores):
+	with open('scores.scr', 'wb') as scores_file:
+		data = pickle.Pickler(scores_file)
+		data.dump(scores)
+
+def recup_scores():
+	scores = {}
+	with open('scores.scr', 'rb') as scores_file:
+		data = pickle.Unpickler(scores_file)
+		scores = data.load()
+	return scores
+
+def get_his_score(name, scores):
+	score = 0
+	try:
+		score = scores[name]
+	except KeyError as e:
+		scores[name] = score
+	finally:
+		return score

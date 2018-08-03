@@ -1,5 +1,7 @@
 ###!src/bin/python
 
+trying_number = 8
+
 mots = []
 mots.append('ananas')
 mots.append('jouer')
