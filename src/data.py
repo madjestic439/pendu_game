@@ -1,9 +1,14 @@
+"""the main config of the pendu game"""
+
 ###!src/bin/python
 
+"""number of chance to find a word"""
 trying_number = 8
 
+"""name of the data file"""
 file_data = 'scores'
 
+"""word's database"""
 mots = []
 mots.append('ananas')
 mots.append('jouer')

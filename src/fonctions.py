@@ -1,21 +1,27 @@
+"""all functionality of the pendu game"""
+
 ###!src/bin/python
 
 from random import randint
 import pickle
 
+"""main config importation from data.py"""
 from src.data import *
 
 def get_param():
+	"""get the main config"""
 	param = {}
 	param['trying_number'] = trying_number
 	return param
 
 def get_mot():
+	"""provide randomly a word from 'mot' (data.py)"""
 	nb_mots = len(mots)
 	index = randint(0, nb_mots-1)
 	return mots[index]
 
 def is_caract_valide(the_mot, list_find_caract, caract):
+	"""evaluate a candidate character"""
 	caract = caract.lower()
 	if caract in list_find_caract:
 		return -1 #already trying
@@ -24,6 +30,7 @@ def is_caract_valide(the_mot, list_find_caract, caract):
 	return 0 #failed
 
 def get_state_mot(the_mot, list_find_caract):
+	"""return the state of the word after applicating the finding caracters list"""
 	rep = ''
 	for index, caract in enumerate(the_mot):
 		if (caract in list_find_caract):
@@ -33,12 +40,14 @@ def get_state_mot(the_mot, list_find_caract):
 	return rep
 
 def is_complet(the_mot, list_find_caract):
+	"""test if all word'scharacter is released"""
 	for index, caract in enumerate(the_mot):
 		if (caract not in list_find_caract):
 			return False
 	return True
 
 def saisi_caract():
+	"""get a character from the gamer"""
 	while 1:
 		caract = str(input('tape one character: '))
 		caract = caract.strip()
@@ -48,6 +57,7 @@ def saisi_caract():
 			return str(caract[0])
 
 def saisi_nom():
+	"""get the gamer's name"""
 	while 1:
 		nom = str(input('your name: '))
 		nom = nom.strip()
@@ -57,11 +67,13 @@ def saisi_nom():
 			return str(nom)
 
 def save_scores(scores):
+	"""save the scores to a file"""
 	with open(file_data, 'wb') as scores_file:
 		data = pickle.Pickler(scores_file)
 		data.dump(scores)
 
 def recup_scores():
+	"""read the scores data from a file"""
 	scores = {}
 	try:
 		with open(file_data, 'rb') as scores_file:
@@ -72,6 +84,7 @@ def recup_scores():
 	return scores
 
 def get_his_score(name, scores):
+	"""provide the gamer score from the saved data"""
 	score = 0
 	try:
 		score = scores[name]
@@ -81,6 +94,7 @@ def get_his_score(name, scores):
 		return score
 
 def saisi_exit(score):
+	"""ask if the gamer want to plaing again or to exit"""
 	print('your score: {}'.format(score))
 	rep = str(input('ready for one more? or tape "x" to exite: '))
 	if rep.strip().lower() == 'x' :
@@ -88,6 +102,7 @@ def saisi_exit(score):
 	return False
 
 def tour(nb_try_init):
+	"""one round's game"""
 	nb_try = nb_try_init
 	the_mot = get_mot()
 	find_caract = []

@@ -1,3 +1,5 @@
+"""the main structure of the pendu game"""
+
 ###!src/bin/python
 
 import os
@@ -18,4 +20,5 @@ while 1:
 	save_scores(scores)
 	if saisi_exit(scores[gamer]) :
 		print('bye :)')
+		os.system("pause")
 		break
