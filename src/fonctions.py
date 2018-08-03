@@ -32,6 +32,12 @@ def get_state_mot(the_mot, list_find_caract):
 			rep += '*'
 	return rep
 
+def is_complet(the_mot, list_find_caract):
+	for index, caract in enumerate(the_mot):
+		if (caract not in list_find_caract):
+			return False
+	return True
+
 def saisi_caract():
 	while 1:
 		caract = str(input('tape one character: '))
@@ -51,15 +57,18 @@ def saisi_nom():
 			return str(nom)
 
 def save_scores(scores):
-	with open('scores.scr', 'wb') as scores_file:
+	with open(file_data, 'wb') as scores_file:
 		data = pickle.Pickler(scores_file)
 		data.dump(scores)
 
 def recup_scores():
 	scores = {}
-	with open('scores.scr', 'rb') as scores_file:
-		data = pickle.Unpickler(scores_file)
-		scores = data.load()
+	try:
+		with open(file_data, 'rb') as scores_file:
+			data = pickle.Unpickler(scores_file)
+			scores = data.load()
+	except FileNotFoundError as e:
+		scores = {}
 	return scores
 
 def get_his_score(name, scores):
@@ -70,3 +79,40 @@ def get_his_score(name, scores):
 		scores[name] = score
 	finally:
 		return score
+
+def saisi_exit(score):
+	print('your score: {}'.format(score))
+	rep = str(input('ready for one more? or tape "x" to exite: '))
+	if rep.strip().lower() == 'x' :
+		return True
+	return False
+
+def tour(nb_try_init):
+	nb_try = nb_try_init
+	the_mot = get_mot()
+	find_caract = []
+	print('le mot à trouver: '+get_state_mot(the_mot, find_caract))
+	while nb_try > 0:
+		if is_complet(the_mot, find_caract):
+			print('word completed: '+the_mot)
+			return nb_try
+		print("remain {} try".format(nb_try))
+		print('=>'+get_state_mot(the_mot, find_caract))
+		caract = saisi_caract()
+		commit = is_caract_valide(the_mot, find_caract, caract)
+		if commit == -1 :
+			print('character revealed yet, please try another.')
+			continue
+		elif commit == 0 :
+			print('No chance! wrong character.')
+			nb_try -= 1
+			continue
+		else :
+			print(":) {} new reveal".format(the_mot.count(caract)))
+			find_caract.append(caract)
+			if is_complet(the_mot, find_caract):
+				print('word completed: '+the_mot)
+				return nb_try
+			continue
+	print('you lose :(')
+	return 0
